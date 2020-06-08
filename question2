@@ -1,0 +1,10 @@
+data_q2 <- aggregate((convertDollar(data_base$PROPDMG, data_base$PROPDMGEXP) +
+                      convertDollar(data_base$CROPDMG, data_base$CROPDMGEXP)),
+                     by=list(data_base$EVTYPE),
+                     FUN=sum)
+colnames(data_q2) <- c("EVTYPE", "TotalCosts")
+sorted_data_q2 <- data_q2[order(data_q2$TotalCosts, decreasing=TRUE), ]
+
+ggplot(sorted_data_q2[1:5, ], aes(x=EVTYPE, y=TotalCosts)) +   
+  geom_bar(stat="identity", size=1) +  
+  labs(title="Bar chart of TOP 5 total costs", x="Event type", y="Total costs (in Dollar)")
