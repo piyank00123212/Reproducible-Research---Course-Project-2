@@ -1,0 +1,9 @@
+data_q1 <- aggregate(data_base$FATALITIES + data_base$INJURIES,
+                     by=list(data_base$EVTYPE),
+                     FUN=sum)
+colnames(data_q1) <- c("EVTYPE", "TotalHarmfulEvents")
+sorted_data_q1 <- data_q1[order(data_q1$TotalHarmfulEvents, decreasing=TRUE), ]
+
+ggplot(sorted_data_q1[1:5, ], aes(x=EVTYPE, y=TotalHarmfulEvents)) +   
+  geom_bar(stat="identity", size=1) +  
+  labs(title=" Bar chart of TOP 5 harmful events", x="Event type", y="# Total harmful events")
